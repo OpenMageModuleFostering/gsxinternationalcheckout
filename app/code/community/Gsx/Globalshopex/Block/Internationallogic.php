@@ -1,68 +1,137 @@
 <?php
-class GSX_InternationalCheckout_Block_International extends Mage_Core_Block_Template {
+class Gsx_Globalshopex_Block_Internationallogic extends Mage_Core_Block_Template {
+
+	public $GSX_URL = "https://globalshopex.com/shoppingcart.asp";
+
+	function getMerchantID(){
+		$merchantid = Mage::getStoreConfig("checkout/globalshopex/gsxmerchatid");
+		return $merchantid;
+	}
+
+
+	function getNameRestrictedItem(){
+		$gsx_name_field_restricted = Mage::getStoreConfig("checkout/globalshopex/gsx_name_field_restricted");
+		return $gsx_name_field_restricted;
+	}
+
+
+
+	//return 1 Iframe Integration
+	//return  0 Cart To Cart
 	
-	public $GC_URL = "http://globalshopex.com/shoppingCart.asp";
+	function getTypeIntegration(){
+
+		//$typeintegration = Mage::getStoreConfig("checkout/globalshopex/typeintegration");
+		$typeintegration="0";
+		return $typeintegration;
+	}
+
+	function getLocalshipping_EXP(){
+		$GSX_Localshipping_EXP = Mage::getStoreConfig("checkout/globalshopex/gsx_local_shippingexp");
+		if ($GSX_Localshipping_EXP=="") {
+			$GSX_Localshipping_EXP="0";
+		}
+		$GSX_Localshipping_EXP = '<input type="hidden" name="LocalShippingEXP" value="'.$GSX_Localshipping_EXP.'" />';
+		return $GSX_Localshipping_EXP;
+	}
+
+	function getLocalshipping(){
+		$GSX_Localshipping = Mage::getStoreConfig('checkout/globalshopex/gsx_local_shipping'); 
+		if ($GSX_Localshipping=="") {
+			$GSX_Localshipping="0";
+		}
+		$GSX_Localshipping = '<input type="hidden" name="LocalShipping" value="'.$GSX_Localshipping.'" />';
+		return $GSX_Localshipping;
+	}
+
+
+	function isiframeActive() {
+		$active = Mage::getStoreConfig("checkout/globalshopex/gsx_iframeactive");
+		return $active;
+	}
+
+	function isEnabledComponent() {
+		$active = Mage::getStoreConfig("checkout/globalshopex/gsx_active");
+		return $active;
+	}
+
 	
-	/**
-	 * Returns true only if merchant_id and shipping_method have been defined and Enabled is set to Yes.  
-	 *	
-	 */
-	 
- 
-	
-	function isEnabled() {
-		
-		$isValid = false;
-		$sm_config = trim(Mage::getStoreConfig("checkout/internationalcheckout/shipping_method"));
-		
-		if ((trim(Mage::getStoreConfig("checkout/internationalcheckout/merchant_id")) != "") && ($sm_config != "") && Mage::getStoreConfig("checkout/internationalcheckout/active") ) {
-		
-			$sm = explode("_",$sm_config);
-			if ( Mage::getStoreConfig('carriers/'.$sm[0].'/active') || $sm[0] == 'freedomesticshippingtogsx' ) {
-				$isValid = true;
+	function isLiveComponent() {
+		$live = false;
+		$is_live = Mage::getStoreConfig("checkout/globalshopex/gsx_is_live");
+		if ($is_live=="0") {
+			$live=true;
+		}
+
+		return $live;
+	}
+
+	function getNamebuttonCssClassName() {		
+		$cssClassNameDefault = "";
+		$gsx_image = trim(Mage::getStoreConfig("checkout/globalshopex/gsx_pathimage"));
+		$cssclassbutton = Mage::getStoreConfig("checkout/globalshopex/gsx_cssclassbutton");
+		if ($gsx_image == "") {
+			$version = Mage::getVersion();
+			if ($cssclassbutton != "") {
+				$cssClassNameDefault = $cssclassbutton;
+
+			}elseif ($version >= "1.4") {
+				$cssClassNameDefault = "button btn-checkout";
+			}
+			else {
+				$cssClassNameDefault = "form-button-alt";
 			}
 		}
-		return $isValid;
+		return $cssClassNameDefault;
 	}
-	
 
-	/**
-	 * Returns merchant_id after removing spaces and converting to lower case.  
-	 *	
-	 */	
-	
-	function formatCompany($cName) {		
-		$cName = str_replace(" ","",$cName);
-		$cName = strtolower($cName);		
-		return $cName;
+	function getStyleExtend() {		
+		
+		$gsx_style = "";
+		$gsx_style = trim(Mage::getStoreConfig("checkout/globalshopex/gsx_styletag"));
+		return $gsx_style;
 	}
-	
-	/**
-	 * Returns CSS style attribute filled with image info.  
-	 *	
-	 */	
-	
-	function buttonImagePath() {		
+
+	function getPathToImageButton() {		
+		
+		$gsx_image = "";
+		$gsx_image = trim(Mage::getStoreConfig("checkout/globalshopex/gsx_pathimage"));
+		return $gsx_image;
+	}
+
+	function getCssForButtonImage() {		
 		
 		$style = "";
-		$style= "style=\"background-image:url('".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."GSX/images/default/gc_button.gif"."'); background-repeat:no-repeat; background-color:transparent; height:27px; width:232px; outline:none; border:none; cursor:pointer;\"";
+		$gsx_image = trim(Mage::getStoreConfig("checkout/globalshopex/gsx_pathimage"));
+		
+		if ($gsx_image != "") {
+		
+			$style= "style=\"background-repeat:no-repeat;";
+            $style= $style ."px; outline:none; border:none; cursor:pointer;\"";
+		}
+		
 		return $style;
 	}
 	
+
+	function urlToIframePage() {
+		$gsx_enablehttps = trim(Mage::getStoreConfig("checkout/globalshopex/gsx_enablehttps"));		
+		$urlIFrame=Mage::getBaseUrl();
+		if($gsx_enablehttps){
+			$urlIFrame=str_replace('http:','https:',Mage::getBaseUrl());
+		}
+		$urlIFrame = $urlIFrame."GSXInternationalCheckout/GSX";
+		return $urlIFrame;
+	}
 	
-	/**
-	 * Returns text for GSX button.  
-	 *	
-	 */		
+	function buttonTextInternationalCustomer() {
 	
-	function buttonText() {
-	
-		if (trim(Mage::getStoreConfig("checkout/internationalcheckout/gsx_button_image")) != "") {
+		if (trim(Mage::getStoreConfig("checkout/globalshopex/gsx_pathimage")) != "") {
 			return "";
 		}
 		else {
 			
-			return $this->__('Global Checkout');
+			return $this->__('International Checkout');
 		}
 	}
 	
@@ -318,17 +387,10 @@ class GSX_InternationalCheckout_Block_International extends Mage_Core_Block_Temp
 			$output .= " ] ";
 			$output .= $crlf;
 		}
-		
-		
 		return $output;
 	}
 	
-	/**
-	 * Returns the Product URL.  
-	 *	
-	 */
-	
-function getProductUrl($item){
+	function getProductUrl($item){
 
         if ($item->getRedirectUrl()) {
             return $item->getRedirectUrl();
@@ -342,153 +404,4 @@ function getProductUrl($item){
         return $product->getUrlModel()->getUrl($product);
 		
 }
-
-	/**
-	 * Returns the Product Brand name.  
-	 *	
-	 */
-	
-function getBrand($item){
-
-        $product = $item->getProduct();
-        $brand = $product->getAttribute('manufacturer');
-		return $brand;
-}
-function getWeight($item){
-
-        $product = $item->getProduct();
-        $brand = $product->getAttribute('weight');
-		return $brand;
-}
-	/**
-	 * Returns the Product Color.  
-	 *	
-	 */
-	
-function getColor($item){
-	
-		$output = "";
-		$valueSeperator = " - ";
-		
-		$options = $this->getProductOptions($item);
-
-		if (count($options)) {
-				if (is_array($options[1]["value"])){
-					if ($options[1]["label"]="Color"){
-						$output = strip_tags(implode($valueSeperator,$options[1]["value"]));
-					}
-				}else{
-					if ($options[1]["label"]="Color"){
-						$output = $options[1]["value"];
-					}
-				}
-		}
-		return $output;
-}
-
-	/**
-	 * Returns the Product Size.  
-	 *	
-	 */
-	
-function getSize($item){
-	
-		$output = "";
-		$valueSeperator = " - ";
-		
-		$options = $this->getProductOptions($item);
-
-		if (count($options)) {
-				if (is_array($options[0]["value"])) {
-					if ($options[0]["label"]="Size"){
-						$output = strip_tags(implode($valueSeperator,$options[0]["value"]));
-					}
-				}else{
-					if ($options[0]["label"]="Size"){
-						$output = $options[0]["value"];
-					}
-				}
-		}
-		return $output;
-}
-
-	
-	
-	/**
-	 * Calculates and returns the domestic shipping price.  
-	 *	
-	 */
-	
-	function shippingPrice () {
-	
-		$session = Mage::getSingleton('checkout/session');
-		$address = $session->getQuote()->getShippingAddress();
-			
-		$bkCountryId = $address->getCountryId();
-		$bkCity = $address->getCity();
-		$bkPostcode = $address->getPostcode();
-		$bkRegionId = $address->getRegionId();
-		$bkRegion = $address->getRegion();
-		
-		$address->setCountryId("US")
-				->setCity("California")
-				->setPostcode("91406")
-				->setRegionId("")
-				->setRegion("")
-				->setCollectShippingRates(true)->collectShippingRates();
-				 
-		
-		
-		$shippingCarrierMethodArr = explode("_",Mage::getStoreConfig('checkout/internationalcheckout/shipping_method'));
-		$shippingCarrier = $shippingCarrierMethodArr[0];
-		$shippingMethod = $shippingCarrierMethodArr[1];
-		$carriers[$shippingCarrier] = '';
-		$price = 0;
-		
-		if ($shippingCarrier == "freedomesticshippingtogsx" && $shippingMethod == "freedomesticshippingtogsx") {
-			return $price;
-		}
-			 
-		$result = Mage::getModel('shipping/shipping')
-			 ->collectRatesByAddress($address, array_keys($carriers))
-			 ->getResult();
- 
-		foreach ($result->getAllRates() as $rate) {
-			if ($rate instanceof Mage_Shipping_Model_Rate_Result_Error) {
-				$errors[$rate->getCarrierTitle()] = 1;
-				$price = -1; // error flag
-			} else {
-			
-				 if ($address->getFreeShipping()) {
-					$price = 0;
-				 } else {
-					 if ($shippingMethod == $rate->getMethod()) {  
-						$price = $rate->getPrice();
-					 }
-			 	 }
-			
-				 if ($price) {
-					 $price = Mage::helper('tax')->getShippingPrice($price, false, $address);
-				 }
-			 
-				//unset($errors[$rate->getCarrierTitle()]);
-				
-			}
-		}
-		
-		
-		$address->setCountryId($bkCountryId)
-				->setCity($bkCity)
-				->setPostcode($bkPostcode)
-				->setRegionId($bkRegionId)
-				->setRegion($bkRegion)
-				->setCollectShippingRates(true)->collectShippingRates();
-		
-		
-		return $price;
-	
-	}
-	
-	
-	
 }

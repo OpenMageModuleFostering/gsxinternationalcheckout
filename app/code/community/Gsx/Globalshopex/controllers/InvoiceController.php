@@ -1,14 +1,15 @@
 <?php
-class GSX_InternationalCheckout_CheckoutController extends Mage_Core_Controller_Front_Action
+class Gsx_Globalshopex_InvoiceController extends Mage_Core_Controller_Front_Action
 {
     public function indexAction()
     {
 		$this->loadLayout();          
-		$templateFile='InternationalCheckout/contentCheckout.phtml';
+		$templateFile='globalshopex/contentInvoice.phtml';
+		
 
 		$block = $this->getLayout()->createBlock(
-			'internationalcheckout/international',
-			'internationalcheckout.international',
+			'globalshopex/internationallogic',
+			'globalshopex.internationallogic',
 			array('template' => $templateFile)
 		);
 		$this->getLayout()->getBlock('root')->setTemplate('page/1column.phtml');
