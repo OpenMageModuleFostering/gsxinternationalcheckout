@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>GSXInternationalCheckout</name>
+    <version>1.2.1</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/gpl-license">GPL</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Installs International Checkout Button in your cart</summary>
+    <description>Installs International Checkout Button in your cart</description>
+    <notes>This is stable version</notes>
+    <authors><author><name>Globalshopex</name><user>brianbeck</user><email>info@globalshopex.com</email></author></authors>
+    <date>2014-04-22</date>
+    <time>16:56:43</time>
+    <contents><target name="magecommunity"><dir name="GSX"><dir name="InternationalCheckout"><dir name="Block"><file name="International.php" hash="27bdf794d1032653bba0466b006d75c8"/></dir><dir name="Helper"><file name="Data.php" hash="d8a7158a95e55c8258d3f9ce50765417"/></dir><dir name="Model"><file name="International.php" hash="d14d71c1c7ca9b1cd0ead5d8dca339b6"/><file name="Servers.php" hash="2460f3985e80eddad55e08c6c15c947c"/><file name="Shippingmethods.php" hash="fa7dd994638cddb5c7c54abca859cbd3"/></dir><dir name="etc"><file name="config.xml" hash="2c58b53c8ef3027af45ce2f77d4bbc65"/><file name="system.xml" hash="f14f022b760ceaa541f7f499abbeab55"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="template"><dir name="Internationalcheckout"><file name="international.phtml" hash="a754136efb887ed2ed16ee7f8c4dacd5"/></dir></dir><dir name="layout"><file name="internationalcheckout.xml" hash="53ddc41716851ef5b7b1dd4af937f1a4"/></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="GSX_InternationalCheckout.xml" hash="87aba4b6648f7a0b22855cab679c48a1"/></dir></target><target name="magemedia"><dir name="GSX"><dir name="images"><dir name="default"><file name="gc_button.gif" hash="5bf110e37bef7098754c13bb392894b5"/></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>4.0.1</min><max>5.5.10</max></php></required></dependencies>
+</package>
