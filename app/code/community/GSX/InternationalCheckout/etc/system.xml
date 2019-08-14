@@ -11,7 +11,7 @@
 					<show_in_website>1</show_in_website>
 					<show_in_store>1</show_in_store>
 					<fields>
-						<name_of_company translate="label">
+						<merchant_id translate="label">
 							<label>Merchant ID</label>							
 							<frontend_type>text</frontend_type>
 							<sort_order>1</sort_order>
@@ -24,8 +24,8 @@
 									<span>Please click the link below to obtain the Merchant ID required for successful integration.<br/><a href="http://globalshopex.com/join_us.html" target="_newtab">http://globalshopex.com/join_us.html</a></span>
 								]]>
 							</comment>
-						</name_of_company>
-						<image_width translate="label">
+						</merchant_id>
+						<local_shipping translate="label">
 							<label>Local Shipping</label>
 							<frontend_type>text</frontend_type>
 							<sort_order>2</sort_order>
@@ -38,8 +38,8 @@
 									<span>Example: 0</span>
 								]]>
 							</comment>
-						</image_width>
-						<image_height translate="label">
+						</local_shipping>
+						<local_shipping_exp translate="label">
 							<label>Local Shipping EXP</label>
 							<frontend_type>text</frontend_type>
 							<sort_order>3</sort_order>
@@ -52,8 +52,8 @@
 									<span>Example: 0</span>
 								]]>
 							</comment>
-						</image_height>
-						<attrib_code translate="label">
+						</local_shipping_exp>
+						<restriction_attrib_code translate="label">
 							<label>International Shipping Restriction Attribute Code</label>
 							<frontend_type>text</frontend_type>
 							<sort_order>4</sort_order>
@@ -66,7 +66,7 @@
 									<span> * Value Required for Restricting International Shipping</span>
 								]]>
 							</comment>
-						</attrib_code>
+						</restriction_attrib_code>
 					</fields>
 				</internationalcheckout>
 			</groups>

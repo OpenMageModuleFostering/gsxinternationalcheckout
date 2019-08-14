@@ -4,16 +4,18 @@ class GSX_InternationalCheckout_Block_International extends Mage_Core_Block_Temp
 	public $GC_URL = "http://globalshopex.com/shoppingCart.asp";
 	
 	/**
-	 * Returns true only if name_of_company and shipping_method have been defined and Enabled is set to Yes.  
+	 * Returns true only if merchant_id and shipping_method have been defined and Enabled is set to Yes.  
 	 *	
 	 */
 	 
+ 
+	
 	function isEnabled() {
 		
 		$isValid = false;
 		$sm_config = trim(Mage::getStoreConfig("checkout/internationalcheckout/shipping_method"));
 		
-		if ((trim(Mage::getStoreConfig("checkout/internationalcheckout/name_of_company")) != "") && ($sm_config != "") && Mage::getStoreConfig("checkout/internationalcheckout/active") ) {
+		if ((trim(Mage::getStoreConfig("checkout/internationalcheckout/merchant_id")) != "") && ($sm_config != "") && Mage::getStoreConfig("checkout/internationalcheckout/active") ) {
 		
 			$sm = explode("_",$sm_config);
 			if ( Mage::getStoreConfig('carriers/'.$sm[0].'/active') || $sm[0] == 'freedomesticshippingtogsx' ) {
@@ -25,7 +27,7 @@ class GSX_InternationalCheckout_Block_International extends Mage_Core_Block_Temp
 	
 
 	/**
-	 * Returns name_of_company after removing spaces and converting to lower case.  
+	 * Returns merchant_id after removing spaces and converting to lower case.  
 	 *	
 	 */	
 	
@@ -43,7 +45,7 @@ class GSX_InternationalCheckout_Block_International extends Mage_Core_Block_Temp
 	function buttonImagePath() {		
 		
 		$style = "";
-		$style= "style=\"background-image:url('".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."GSX/images/default/gc_button.gif"."'); background-repeat:no-repeat; background-color:transparent; height:35px; width:183px; outline:none; border:none; cursor:pointer;\"";
+		$style= "style=\"background-image:url('".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."GSX/images/default/gc_button.gif"."'); background-repeat:no-repeat; background-color:transparent; height:27px; width:232px; outline:none; border:none; cursor:pointer;\"";
 		return $style;
 	}
 	
